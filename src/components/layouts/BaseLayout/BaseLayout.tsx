@@ -4,7 +4,7 @@ const BaseLayout = ({
   leftContent,
   rightContent
 }: IBaseLayoutProps) => (
-  <div className="mt-4 flex grow">
+  <div className="flex grow">
     {leftContent && (
       <div className="w-5/12 bg-gray-200 p-4">
         {leftContent}
