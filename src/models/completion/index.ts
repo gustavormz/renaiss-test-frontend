@@ -1,5 +1,6 @@
 export {
-  RoleTypes
+  RoleTypes,
+  FinishReasonTypes,
 } from './ICompletionModel'
 
 export type {

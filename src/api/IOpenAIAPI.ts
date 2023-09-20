@@ -119,10 +119,16 @@ interface IChatCompletionsErrorResponse {
   }
   status: number
   statusText: undefined
+  response: {
+    data: any
+  }
+  message: string
+  type: string
+  code: number
 }
 
 interface IChatCompletionsProps {
-  chatCompletionsBody: IChatCompletion
+  body: IChatCompletion
 }
 
 export type {

@@ -1,0 +1,10 @@
+const MAX_WORDS_LENGTH = 1500 as const
+
+const MAX_CONTEXT_MESSAGES = 15 as const
+
+const CONSTANTS = {
+  MAX_CONTEXT_MESSAGES,
+  MAX_WORDS_LENGTH,
+}
+
+export default CONSTANTS

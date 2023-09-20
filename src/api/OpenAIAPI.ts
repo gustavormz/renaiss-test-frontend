@@ -12,7 +12,7 @@ class OpenAIAPI {
   private static endpoints = Config.endpoints
 
   static async chatCompletitions({
-    chatCompletionsBody
+    body: chatCompletionsBody
   }: IChatCompletionsProps): Promise<IChatCompletionsResponse> {
     const headers = {
       'Content-Type': 'application/json',

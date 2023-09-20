@@ -4,6 +4,11 @@ const RoleTypes = {
   SYSTEM: 'system',
 } as const
 
+const FinishReasonTypes = {
+  length: 'length',
+  stop: 'stop',
+} as const
+
 interface IChatCompletionMessage {
   role: (typeof RoleTypes)[keyof typeof RoleTypes]
   content: string
@@ -19,4 +24,4 @@ export type {
   IChatCompletionMessage,
 }
 
-export { RoleTypes }
+export { RoleTypes, FinishReasonTypes }
