@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/image'
 
 import { IHeaderProps } from './IHeader'
 
@@ -11,7 +11,7 @@ import settingSVG from '../icons/settings.svg'
 const Header = ({
 
 }: IHeaderProps) => (
-  <header className="bg-primary h-93 justify-between flex pt-25 pb-23 pl-62 pr-47">
+  <header className="bg-primary h-93 justify-between flex pt-25 pb-23 px-33">
     <div className="flex gap-13">
       <BaseButton
         icon={

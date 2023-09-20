@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 interface IBaseLayoutProps {
-  leftContent?: ReactNode | JSX.Element
+  leftContent?: ReactNode
   rightContent?: ReactNode
 }
 
