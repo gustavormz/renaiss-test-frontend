@@ -4,7 +4,7 @@ import { IBlock } from '../../utils/markdownCode'
 
 interface IMessage {
   sender: (typeof RoleTypes)[keyof typeof RoleTypes]
-  receiver: string
+  receiver?: string
   message: string
   date: Date
   isLatestMessage?: boolean
