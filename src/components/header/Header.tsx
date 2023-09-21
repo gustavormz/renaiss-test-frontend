@@ -9,35 +9,40 @@ import sidebarSVG from '../icons/sidebar.svg'
 import settingSVG from '../icons/settings.svg'
 
 const Header = ({
-
-}: IHeaderProps) => (
-  <header className="bg-primary h-93 justify-between flex pt-25 pb-23 px-33">
-    <div className="flex gap-13">
+  handleCustomClick,
+  handlePanelClick,
+}: IHeaderProps) => {
+  return (
+    <header className="bg-primary h-93 justify-between flex pt-25 pb-23 px-33">
+      <div className="flex gap-13">
+        <BaseButton
+          icon={
+            <Image
+              priority
+              src={chevronSVG}
+              alt="back"
+            />}
+            text={'Atrás'}
+            className={'pr-20'}/>
+        <BaseButton
+          onClick={handlePanelClick}
+          icon={
+            <Image
+              priority
+              src={sidebarSVG}
+              alt="sidebar"
+            />}/>
+      </div>
       <BaseButton
+        onClick={handleCustomClick}
         icon={
           <Image
             priority
-            src={chevronSVG}
-            alt="back"
-          />}
-          text={'Atrás'}
-          className={'pr-20'}/>
-      <BaseButton
-        icon={
-          <Image
-            priority
-            src={sidebarSVG}
-            alt="sidebar"
+            src={settingSVG}
+            alt="settings"
           />}/>
-    </div>
-    <BaseButton
-      icon={
-        <Image
-          priority
-          src={settingSVG}
-          alt="settings"
-        />}/>
-  </header>
-)
+    </header>
+  )
+}
 
 export default Header
