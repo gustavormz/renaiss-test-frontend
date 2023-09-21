@@ -32,7 +32,7 @@ const ChatSection = () => {
   const { state: chatState, dispatch: chatDispatch } = useChatContext()
 
   const { messages, lastMessageSendBy } = messagesState
-  const { chats, activeChat } = chatState
+  const { chats, activeChat, currentModel } = chatState
 
   useEffect(() => {
     const callSendChatCompletion = async () => {
@@ -41,6 +41,7 @@ const ChatSection = () => {
           appDispatch,
           messagesDispatch,
           messages,
+          openAIModel: activeChat?.openAIModel
         })
       } else if (messages.length) {
         ChatActions.updateChat({
@@ -76,6 +77,7 @@ const ChatSection = () => {
       ChatActions.newChat({
         chatDispatch,
         messagesDispatch,
+        openAIModel: currentModel
       })
     }
   }, [userMessage, activeChat])
@@ -89,6 +91,7 @@ const ChatSection = () => {
       chatDispatch,
       messagesDispatch,
       reset: true,
+      openAIModel: currentModel,
     })
   }, [])
 
@@ -120,7 +123,7 @@ const ChatSection = () => {
         </div>
         <div className="px-23 pt-23">
           <BaseInputText
-            placeholder='Insertar PROMPT'
+            placeholder='Insertar Prompt'
             value={userMessage}
             onChange={handleOnInputChange}
             onClick={handleOnSendMessage}

@@ -2,7 +2,7 @@
 
 import { debounce } from 'lodash'
 
-import OpenAIAPI from '../../../api/OpenAIAPI'
+import OpenAIAPI from '@/api/OpenAIAPI'
 
 import { API_CALLS_DEBOUNCE_TIME } from '../constants'
 
@@ -25,13 +25,14 @@ const sendChatCompletionAction = async ({
   messages,
   messagesDispatch,
   appDispatch,
+  openAIModel,
 }: ISendChatCompletition) => {
   appDispatch({
     type: EAppTypes.SET_IS_FETCHING,
     payload: { isFetching: true },
   })
 
-  const body = CompletionBuilder.buildChatCompletitionBody({ messages })
+  const body = CompletionBuilder.buildChatCompletitionBody({ messages, openAIModel })
   const response = await OpenAIAPI.chatCompletitions({ body })
 
   const aiMessageResponse = getMessageFromCompletionResponse({
@@ -76,12 +77,14 @@ const sendChatCompletion = debounce(
     messages,
     messagesDispatch,
     appDispatch,
+    openAIModel,
   }: ISendChatCompletition) => {
     try {
       await sendChatCompletionAction({
         appDispatch,
         messages,
         messagesDispatch,
+        openAIModel,
       })
     } catch (error: any) {
       sendChatCompletionError({

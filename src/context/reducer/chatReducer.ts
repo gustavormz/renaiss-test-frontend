@@ -9,6 +9,7 @@ enum ETypes {
   SET_OPEN_AI_MODELS = 'SET_OPEN_AI_MODELS',
   SET_CHATS = 'SET_CHATS',
   SET_ACTIVE_CHAT = 'SET_ACTIVE_CHAT',
+  UPDATE_MODEL_CHAT = 'UPDATE_MODEL_CHAT',
 }
 
 type TPayload = {
@@ -24,6 +25,9 @@ type TPayload = {
   [ETypes.SET_CHATS]: {
     chats: IChat[]
   },
+  [ETypes.UPDATE_MODEL_CHAT]: {
+    model: string
+  },
 }
 
 type TActions = TActionMap<TPayload>[keyof TActionMap<TPayload>]
@@ -34,12 +38,14 @@ interface IState {
   activeChat?: IChat
   chats: IChat[]
   models: string[]
+  currentModel: string
 }
 
 const initialState: IState = {
   activeChat: undefined,
   chats: [],
   models: [],
+  currentModel: ''
 }
 
 const reducer = (state: IState, action: TActions) => {
@@ -71,6 +77,22 @@ const reducer = (state: IState, action: TActions) => {
     return {
       ...state,
       chats: action.payload.chats,
+    }
+  }
+  case ETypes.UPDATE_MODEL_CHAT: {
+    if (state.activeChat) {
+      const activeChatCopy: IChat = { ...state.activeChat }
+      activeChatCopy.openAIModel = action.payload.model
+      return {
+        ...state,
+        activeChat: activeChatCopy,
+        currentModel: action.payload.model
+      }
+    }
+    
+    return {
+      ...state,
+      currentModel: action.payload.model
     }
   }
   default:

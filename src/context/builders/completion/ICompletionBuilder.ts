@@ -3,6 +3,7 @@ import { IMessage } from '../../../models/message/IMessageModel'
 
 interface IBuildChatCompletitionBodyProps {
   messages: IMessage[]
+  openAIModel?: string
 }
 
 interface IBuildAIMessageFormatedProps {

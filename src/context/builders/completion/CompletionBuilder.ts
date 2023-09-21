@@ -13,6 +13,7 @@ import {
 
 const buildChatCompletitionBody = ({
   messages,
+  openAIModel
 }: IBuildChatCompletitionBodyProps): IChatCompletion => {
   const contextMessages =
     messages.length <= Constants.MAX_CONTEXT_MESSAGES
@@ -25,7 +26,7 @@ const buildChatCompletitionBody = ({
     }))
 
   return {
-    model: process.env.NEXT_PUBLIC_OPEN_AI_GPT_MODEL ?? '',
+    model: openAIModel ?? process.env.NEXT_PUBLIC_OPEN_AI_GPT_MODEL ?? '',
     messages: chatCompletionMessages,
   }
 }

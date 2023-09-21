@@ -16,7 +16,8 @@ const newChat = ({
   chatDispatch,
   openAIModel,
   messagesDispatch,
-  reset = false
+  reset = false,
+  currentModel,
 }: INewChatProps) => {
   if (reset) {
     messagesDispatch({
@@ -70,6 +71,7 @@ const updateChat = ({
   chatId,
   chats,
   messages,
+  currentModel,
 }: IUpdateChatProps) => {
   if (!chatId) {
     return

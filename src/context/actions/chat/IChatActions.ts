@@ -10,6 +10,7 @@ interface INewChatProps {
   openAIModel?: string
   messagesDispatch: TMessagesDispatch
   reset?: boolean
+  currentModel?: string
 }
 
 interface IDeleteChatProps {
@@ -26,6 +27,7 @@ interface IUpdateChatProps {
   chatDispatch: TChatDispatch
   messages: IMessage[]
   activeChat?: IChat
+  currentModel?: string
 }
 
 interface ISetChatProps {

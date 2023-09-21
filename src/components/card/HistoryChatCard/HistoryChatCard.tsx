@@ -50,9 +50,8 @@ const HistoryChatCard = ({
     const currentTime = new Date()
     const startDate = firstMessage.date
     const endDate = latestMessage.date
-
-    const diffMilliseconds = startDate.getTime() - endDate.getTime()
-    const diffHours = diffMilliseconds / (1000 * 60 * 60)
+    const diffMilliseconds = endDate.getTime() - startDate.getTime()
+    const diffHours = 24 - Math.floor(diffMilliseconds / (1000 * 60 * 60))
 
     if (diffHours < 1) {
       return 'Ayer, queda menos de 1 hora'

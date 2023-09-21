@@ -9,6 +9,7 @@ interface ISendChatCompletition {
   appDispatch: TAppDispatch
   messages: IMessage[]
   isContinueMessage?: boolean
+  openAIModel?: string
 }
 
 interface ISendChatCompletitionError {
