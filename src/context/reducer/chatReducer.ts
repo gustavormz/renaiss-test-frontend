@@ -51,7 +51,8 @@ const reducer = (state: IState, action: TActions) => {
     currentChats.push(action.payload.newChat)
     return {
       ...state,
-      chats: currentChats
+      chats: currentChats,
+      activeChat: action.payload.newChat
     }
   }
   case ETypes.SET_ACTIVE_CHAT: {

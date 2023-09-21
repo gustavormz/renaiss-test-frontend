@@ -84,9 +84,6 @@ const sendChatCompletion = debounce(
         messagesDispatch,
       })
     } catch (error: any) {
-      console.log('ERROR PRIMARIO')
-      console.error(error)
-      console.log('==============')
       sendChatCompletionError({
         appDispatch,
         error,

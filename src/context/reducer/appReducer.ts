@@ -11,6 +11,7 @@ interface IError {
 enum ETypes {
   SET_IS_FETCHING = 'SET_IS_FETCHING',
   SET_ERROR = 'SET_ERROR',
+  SET_RESET = 'SET_RESET',
 }
 
 type TPayload = {
@@ -20,6 +21,9 @@ type TPayload = {
   [ETypes.SET_ERROR]: {
     error: IError
   },
+  [ETypes.SET_RESET]: {
+    reset: boolean
+  }
 }
 
 type TActions = TActionMap<TPayload>[keyof TActionMap<TPayload>]
@@ -29,11 +33,13 @@ type TDispatch = Dispatch<TActions>
 interface IState {
   isFetching: boolean
   error: IError | undefined
+  reset?: boolean
 }
 
 const initialState: IState = {
   isFetching: false,
   error: undefined,
+  reset: false,
 }
 
 const reducer = (state: IState, action: TActions) => {
@@ -50,6 +56,12 @@ const reducer = (state: IState, action: TActions) => {
     return {
       ...state,
       error: action.payload.error,
+    }
+  }
+  case ETypes.SET_RESET: {
+    return {
+      ...state,
+      reset: action.payload.reset
     }
   }
   default:

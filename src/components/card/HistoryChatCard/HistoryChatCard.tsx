@@ -22,11 +22,27 @@ const HistoryChatCard = ({
 }: IHistoryChatCardProps) => {
   const [isSelected, setIsSelected] = useState(false)
 
-  const firstMessage = useMemo(() => messages[0], [messages])
-  const latestMessage = useMemo(() =>  messages.at(-1) || messages[0], [messages])
+  const firstMessage = useMemo(() => {
+    if (!messages.length) {
+      return {
+        message: 'Esperando...',
+        date: undefined,
+      }
+    }
+    return messages[0]
+  }, [messages])
+  const latestMessage = useMemo(() =>  {
+    if (!messages.length) {
+      return undefined
+    }
+    return messages.at(-1) || messages[0]
+  }, [messages])
 
   const title = useMemo(() => firstMessage.message.substring(0, constants.MAX_HISTORY_CHAT_CARD_LENGTH), [firstMessage])
   const remainingTime = useMemo(() => {
+    if (!firstMessage.date || !latestMessage?.date) {
+      return 'Esperando...'
+    }
     const currentTime = new Date()
     const startDate = firstMessage.date
     const endDate = latestMessage.date
@@ -47,7 +63,7 @@ const HistoryChatCard = ({
     }
   
     return `Expiró`
-  }, [firstMessage.date, latestMessage.date])
+  }, [firstMessage.date, latestMessage])
 
   const handleOnCancel = useCallback(() => {
     setIsSelected(false)

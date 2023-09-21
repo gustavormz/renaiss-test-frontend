@@ -1,12 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { ChangeEventHandler, useCallback, useState, useEffect, useRef } from 'react'
+import { ChangeEventHandler, useCallback, useState, useEffect } from 'react'
 import Image from 'next/image'
 
 import { useMessagesContext } from '@/context/store/messagesStore'
-import { ETypes as ETypesMessage } from '@/context/reducer/messagesReducer'
 import { useAppContext } from '@/context/store/appStore'
-import ChatActions from '@/context/actions/completion/CompletionActions'
+import { useChatContext } from '@/context/store/chatStore'
+import { ETypes as ETypesMessage } from '@/context/reducer/messagesReducer'
+import CompletionActions from '@/context/actions/completion/CompletionActions'
+import ChatActions from '@/context/actions/chat/ChatActions'
 
 import SectionLayout from "@/components/layouts/SectionLayout"
 import BaseButton from '@/components/button/BaseButton'
@@ -21,54 +24,35 @@ import plusSVG from '../../icons/plus.svg'
 import sendSVG from '../../icons/send.svg'
 
 const ChatSection = () => {
-  const scrollElementRef = useRef<HTMLElement>(null)
   const [userMessage, setUserMessage] = useState('')
 
   const { state: messagesState, dispatch: messagesDispatch } =
     useMessagesContext()
   const { state: appState, dispatch: appDispatch } = useAppContext()
+  const { state: chatState, dispatch: chatDispatch } = useChatContext()
 
   const { messages, lastMessageSendBy } = messagesState
-
-  const scrollToElement = useCallback(() => {
-    const element = scrollElementRef.current;
-    if (element) {
-      const scrollOptions: ScrollToOptions = {
-        top: element.offsetTop - (window.innerHeight / 2),
-        behavior: "smooth",
-      };
-      window.scrollTo(scrollOptions);
-    }
-  }, [])
+  const { chats, activeChat } = chatState
 
   useEffect(() => {
     const callSendChatCompletion = async () => {
       if (messages.length && lastMessageSendBy === RoleTypes.USER) {
-        ChatActions.sendChatCompletion({
+        CompletionActions.sendChatCompletion({
           appDispatch,
           messagesDispatch,
           messages,
         })
+      } else if (activeChat) {
+        ChatActions.updateChat({
+          chatDispatch,
+          chatId: activeChat.id,
+          chats,
+          messages
+        })
       }
     }
     callSendChatCompletion()
-  }, [appDispatch, lastMessageSendBy, messages, messagesDispatch])
-
-  useEffect(() => {
-    let timeoutReference: NodeJS.Timeout | undefined;
-
-    if (messages.length) {
-      timeoutReference = setTimeout(() => {
-        scrollToElement();
-      }, 1000);
-    }
-
-    return () => {
-      if (timeoutReference) {
-        clearTimeout(timeoutReference)
-      }
-    };
-  }, [messages.length, scrollToElement])
+  }, [lastMessageSendBy, messages, activeChat])
 
   const renderChatCards = useCallback(() => {
     return messages.map((message, index) => {
@@ -84,10 +68,24 @@ const ChatSection = () => {
       payload: { message: userMessage },
     })
     setUserMessage('')
-  }, [messagesDispatch, userMessage])
+    if (!activeChat) {
+      ChatActions.newChat({
+        chatDispatch,
+        messagesDispatch,
+      })
+    }
+  }, [userMessage, activeChat])
 
   const handleOnInputChange: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
     setUserMessage(event.target.value);
+  }, [])
+
+  const handleNewChatClick = useCallback(() => {
+    ChatActions.newChat({
+      chatDispatch,
+      messagesDispatch,
+      reset: true,
+    })
   }, [])
 
   return (
@@ -96,6 +94,7 @@ const ChatSection = () => {
       title="Odama Chat"
       button={
         <BaseButton
+          onClick={handleNewChatClick}
           className="px-20"
           type="secondary"
           text="Nueva Búsqueda"
@@ -109,7 +108,7 @@ const ChatSection = () => {
           }/>
       }>
       <div className="h-full flex flex-col">
-        <div className="grow bg-background px-25 py-25" ref={scrollElementRef.current}>
+        <div className="grow bg-background px-25 py-25">
           {renderChatCards()}
           {appState.isFetching && (
             <TypingCard />
@@ -117,6 +116,7 @@ const ChatSection = () => {
         </div>
         <div className="px-23 pt-23">
           <BaseInputText
+            placeholder='Insertar PROMPT'
             value={userMessage}
             onChange={handleOnInputChange}
             onClick={handleOnSendMessage}
