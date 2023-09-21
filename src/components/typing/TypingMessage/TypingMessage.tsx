@@ -12,7 +12,7 @@ const TypingAnimation = () => {
     }
   }, [])
 
-  return <>{'\267'.repeat(dots)}</>
+  return <>{'\xb7'.repeat(dots)}</>
 }
 
 export default TypingAnimation
