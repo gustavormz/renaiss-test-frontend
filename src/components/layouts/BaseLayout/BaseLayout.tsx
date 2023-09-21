@@ -10,7 +10,7 @@ const BaseLayout = ({
         {leftContent}
       </div>
     )}
-      <div className={'grow'}>
+      <div className={`ml-20 flex ${leftContent ? 'w-7/12' : 'w-full'}`}>
           {rightContent}
       </div>
   </div>

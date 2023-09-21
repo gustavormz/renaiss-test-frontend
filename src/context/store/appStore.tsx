@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useReducer, createContext, useContext, useMemo } from 'react'
 
 import { IState, reducer, initialState, TDispatch } from '../reducer/appReducer'

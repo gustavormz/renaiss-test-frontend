@@ -1,3 +1,5 @@
+'use client'
+
 import { IBaseInputText } from './IBaseInputText'
 
 const BaseInputText = ({
@@ -17,8 +19,11 @@ const BaseInputText = ({
     />
     {icon && (
       <div
-        onClick={onClick}
-        className="focus:outline-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 pointer-events-none">
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick && onClick();
+        }}
+        className="focus:outline-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
         {icon}
       </div>
     )}

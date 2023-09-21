@@ -7,7 +7,6 @@ interface ISendChatCompletition {
   appDispatch: TAppDispatch
   messages: IMessage[]
   isContinueMessage?: boolean
-  topic: string
 }
 
 interface ISendChatCompletitionError {

@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback } from 'react'
 
 import SectionLayout from '@/components/layouts/SectionLayout'
@@ -55,7 +57,7 @@ const HistorySection = () => {
   const renderChats = useCallback(() => {
     return (
       <div className="overflow-y-auto">
-          {chats.map(chat => <HistoryChatCard key={`history-card-${chat.id}`} {...chat} />)}
+          {chats.map(chat => <HistoryChatCard handleOnConfirm={() => {}} key={`history-card-${chat.id}`} {...chat} />)}
       </div>
     )
   }, [chats])

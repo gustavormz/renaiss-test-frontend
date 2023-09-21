@@ -1,3 +1,5 @@
+'use client'
+
 import { debounce } from 'lodash'
 
 import OpenAIAPI from '../../../api/OpenAIAPI'
@@ -74,18 +76,16 @@ const sendChatCompletion = debounce(
     messages,
     messagesDispatch,
     appDispatch,
-    topic,
   }: ISendChatCompletition) => {
     try {
       await sendChatCompletionAction({
         appDispatch,
         messages,
         messagesDispatch,
-        topic,
       })
     } catch (error: any) {
       console.log('ERROR PRIMARIO')
-      console.log(error)
+      console.error(error)
       console.log('==============')
       sendChatCompletionError({
         appDispatch,

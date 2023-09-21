@@ -25,7 +25,7 @@ const buildChatCompletitionBody = ({
     }))
 
   return {
-    model: process.env.OPEN_AI_GPT_MODEL ?? '',
+    model: process.env.NEXT_PUBLIC_OPEN_AI_GPT_MODEL ?? '',
     messages: chatCompletionMessages,
   }
 }

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
-import SectionLayout from "@/components/layouts/SectionLayout"
-import BaseInputText from "@/components/inputText/BaseInputText"
+import SectionLayout from '@/components/layouts/SectionLayout'
+import BaseInputText from '@/components/inputText/BaseInputText'
 
 import sendSVG from '../../icons/send.svg'
 

@@ -5,6 +5,7 @@ interface IBaseButtonProps {
   text?: string
   onClick?: () => void
   className?: string
+  type?: 'primary' | 'secondary'
 }
 
 export type { IBaseButtonProps }

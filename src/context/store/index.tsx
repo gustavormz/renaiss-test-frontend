@@ -1,3 +1,5 @@
+'use client'
+
 import { combineComponents } from '../utils'
 
 import MessagesProvider from './messagesStore'

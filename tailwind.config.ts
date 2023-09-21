@@ -85,7 +85,9 @@ const config: Config = {
         '35': '2.188rem',
       },
       margin: {
+        '12': '0.75rem',
         '16': '1rem',
+        '20': '1.25rem',
       },
     },
   },
