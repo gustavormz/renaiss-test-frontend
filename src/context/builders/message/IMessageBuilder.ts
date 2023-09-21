@@ -15,8 +15,13 @@ interface IBuildMessagesProps {
   messages: IMessage[]
 }
 
+interface IBuildSystemMessageProps {
+  message: string
+}
+
 export type {
   IBuildAIMessageProps,
   IBuildMessagesProps,
   IBuildUserMessageProps,
+  IBuildSystemMessageProps,
 }

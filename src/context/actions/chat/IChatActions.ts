@@ -39,4 +39,17 @@ interface ISetLastActionProps {
   chatDispatch: TChatDispatch
 }
 
-export type { INewChatProps, IDeleteChatProps, IUpdateChatProps, ISetChatProps, ISetLastActionProps }
+interface IUpdateChatWithSystemMessageProps {
+  chatId?: string
+  chats: IChat[]
+  chatDispatch: TChatDispatch
+  messages: IMessage[]
+  activeChat?: IChat
+  systemMessage: string
+  messagesDispatch: TMessagesDispatch
+  openAIModel?: string
+}
+
+export type {
+  INewChatProps, IDeleteChatProps, IUpdateChatProps, ISetChatProps, ISetLastActionProps, IUpdateChatWithSystemMessageProps
+}

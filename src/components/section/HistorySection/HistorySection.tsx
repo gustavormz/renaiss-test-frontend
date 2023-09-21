@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { useCallback } from 'react'
@@ -8,7 +9,6 @@ import ChatActions from '@/context/actions/chat/ChatActions'
 
 import SectionLayout from '@/components/layouts/SectionLayout'
 import HistoryChatCard from '@/components/card/HistoryChatCard'
-import { IChat } from '@/models/chat'
 
 const HistorySection = () => {
   const { state: chatState, dispatch: chatDispatch } = useChatContext()

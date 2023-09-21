@@ -1,8 +1,12 @@
 'use client'
 
-import { INewChatProps, IDeleteChatProps, IUpdateChatProps, ISetChatProps } from './IChatActions'
+import {
+  INewChatProps,
+  IDeleteChatProps,
+  IUpdateChatProps,
+  ISetChatProps,
+} from './IChatActions'
 
-import { ETypes as EAppTypes } from '../../reducer/appReducer'
 import { ETypes as EMessagesTypes } from '../../reducer/messagesReducer'
 import { ETypes as EChatTypes } from '../../reducer/chatReducer'
 

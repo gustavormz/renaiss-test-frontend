@@ -2,12 +2,12 @@ import { Dispatch } from 'react'
 
 import { TActionMap } from '../utils'
 
-import { IMessage } from '../../models/message'
-import { RoleTypes, } from '../../models/completion'
+import { IMessage } from '@/models/message'
+import { RoleTypes, } from '@/models/completion'
 
 import MessageBuilder from '../builders/message/MessageBuilder'
 
-import { IBlock } from '../../utils/markdownCode'
+import { IBlock } from '@/utils/markdownCode'
 
 enum ETypes {
   SET_MESSAGE_AI = 'SET_MESSAGE_AI',
@@ -94,9 +94,18 @@ const reducer = (state: IState, action: TActions) => {
     }
   }
   case ETypes.SET_MESSAGE_SYSTEM: {
+    const messagesCopy = [...state.messages]
+    if (state.messages.length && state.messages[0].sender === RoleTypes.SYSTEM) {
+      messagesCopy[0].message = action.payload.message
+    } else {
+      const systemMessage = MessageBuilder.buildSystemMessage({ message: action.payload.message })
+      messagesCopy.unshift(systemMessage)
+    }
+    
     return {
       ...state,
-      messageSystem: action.payload.message,
+      messages: messagesCopy,
+      lastMessageSendBy: RoleTypes.SYSTEM,
     }
   }
   case ETypes.SET_SHOW_CONTINUE_MESSAGE_OPTION: {

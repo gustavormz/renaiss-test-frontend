@@ -57,8 +57,12 @@ const ChatSection = () => {
   const renderChatCards = useCallback(() => {
     return messages.map((message, index) => {
       const key = `chat-${message.sender}-${index}`
-      return message.sender === 'assistant' ?
-        <AIChatCard key={key} {...message} /> : <UserChatCard key={key} {...message}/>
+      if (message.sender === RoleTypes.AI) {
+        return <AIChatCard key={key} {...message} />
+      }
+      if (message.sender === RoleTypes.USER) {
+        return <UserChatCard key={key} {...message}/>
+      }
     })
   }, [messages])
 

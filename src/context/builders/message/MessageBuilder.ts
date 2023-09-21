@@ -2,7 +2,12 @@ import { RoleTypes } from '../../../models/completion'
 import { IMessage } from '../../../models/message'
 import { IBlock } from '../../../utils/markdownCode'
 
-import { IBuildAIMessageProps, IBuildMessagesProps, IBuildUserMessageProps } from './IMessageBuilder'
+import {
+  IBuildAIMessageProps,
+  IBuildMessagesProps,
+  IBuildUserMessageProps,
+  IBuildSystemMessageProps
+} from './IMessageBuilder'
 
 const buildUserMessage = ({
   message,
@@ -25,6 +30,15 @@ const buildAIMessage = ({
   messageParts,
 })
 
+const buildSystemMessage = ({
+  message
+}: IBuildSystemMessageProps): IMessage => ({
+  date: new Date(),
+  message,
+  sender: RoleTypes.SYSTEM,
+  receiver: '',
+})
+
 const buildMessages = ({ messages }: IBuildMessagesProps): IMessage[] => {
   return messages.map(message => {
     if (message.sender === RoleTypes.USER) {
@@ -42,6 +56,7 @@ const MessageBuilders = {
   buildUserMessage,
   buildAIMessage,
   buildMessages,
+  buildSystemMessage,
 }
 
 export default MessageBuilders
