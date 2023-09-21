@@ -42,12 +42,12 @@ const ChatSection = () => {
           messagesDispatch,
           messages,
         })
-      } else if (activeChat) {
+      } else if (messages.length) {
         ChatActions.updateChat({
           chatDispatch,
-          chatId: activeChat.id,
+          chatId: activeChat?.id,
           chats,
-          messages
+          messages,
         })
       }
     }

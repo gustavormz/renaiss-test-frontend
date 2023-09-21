@@ -16,13 +16,27 @@ interface IDeleteChatProps {
   chatDispatch: TChatDispatch
   chatId: string
   chats: IChat[]
+  activeChat?: IChat
+  messagesDispatch: TMessagesDispatch
 }
 
 interface IUpdateChatProps {
-  chatId: string
+  chatId?: string
   chats: IChat[]
   chatDispatch: TChatDispatch
   messages: IMessage[]
+  activeChat?: IChat
 }
 
-export type { INewChatProps, IDeleteChatProps, IUpdateChatProps }
+interface ISetChatProps {
+  chatDispatch: TChatDispatch
+  chatId: string
+  chats: IChat[]
+  messagesDispatch: TMessagesDispatch
+}
+
+interface ISetLastActionProps {
+  chatDispatch: TChatDispatch
+}
+
+export type { INewChatProps, IDeleteChatProps, IUpdateChatProps, ISetChatProps, ISetLastActionProps }

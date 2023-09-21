@@ -19,7 +19,7 @@ type TPayload = {
     models: string[]
   },
   [ETypes.SET_ACTIVE_CHAT]: {
-    activeChat: IChat
+    activeChat: IChat | undefined
   },
   [ETypes.SET_CHATS]: {
     chats: IChat[]

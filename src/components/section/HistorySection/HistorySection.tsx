@@ -3,6 +3,8 @@
 import { useCallback } from 'react'
 
 import { useChatContext } from '@/context/store/chatStore'
+import { useMessagesContext } from '@/context/store/messagesStore'
+import ChatActions from '@/context/actions/chat/ChatActions'
 
 import SectionLayout from '@/components/layouts/SectionLayout'
 import HistoryChatCard from '@/components/card/HistoryChatCard'
@@ -10,16 +12,41 @@ import { IChat } from '@/models/chat'
 
 const HistorySection = () => {
   const { state: chatState, dispatch: chatDispatch } = useChatContext()
+  const { dispatch: messagesDispatch } = useMessagesContext()
 
-  const { chats } = chatState
+  const { chats, activeChat } = chatState
+
+  const handleOnDelete = useCallback((id: string) => {
+    ChatActions.deleteChat({
+      chatDispatch,
+      chatId: id,
+      chats,
+      activeChat,
+      messagesDispatch
+    })
+  }, [activeChat, chats])
+
+  const handleRetrieveChat = useCallback((id: string) => {
+    ChatActions.setChat({
+      chatDispatch,
+      chatId: id,
+      chats,
+      messagesDispatch
+    })
+  }, [chats])
 
   const renderChats = useCallback(() => {
     return (
       <div className="overflow-y-auto">
-          {chats.map(chat => <HistoryChatCard handleOnConfirm={() => {}} key={`history-card-${chat.id}`} {...chat} />)}
+          {chats.map(chat =>
+            <HistoryChatCard
+              handleRetrieveChat={handleRetrieveChat}
+              handleOnConfirm={handleOnDelete}
+              key={`history-card-${chat.id}`}
+              {...chat} />)}
       </div>
     )
-  }, [chats])
+  }, [chats, handleOnDelete, handleRetrieveChat])
 
   return (
     <SectionLayout className="h-full" title='Historial de Búsquedas'>

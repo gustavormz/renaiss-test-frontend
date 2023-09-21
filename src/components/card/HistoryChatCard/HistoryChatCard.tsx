@@ -19,6 +19,7 @@ const HistoryChatCard = ({
   messages,
   handleOnConfirm,
   id,
+  handleRetrieveChat,
 }: IHistoryChatCardProps) => {
   const [isSelected, setIsSelected] = useState(false)
 
@@ -43,13 +44,16 @@ const HistoryChatCard = ({
     if (!firstMessage.date || !latestMessage?.date) {
       return 'Esperando...'
     }
+    if (messages.length <= 1) {
+      return `Hoy, quedan 24 horas`
+    }
     const currentTime = new Date()
     const startDate = firstMessage.date
     const endDate = latestMessage.date
 
     const diffMilliseconds = startDate.getTime() - endDate.getTime()
     const diffHours = diffMilliseconds / (1000 * 60 * 60)
-  
+
     if (diffHours < 1) {
       return 'Ayer, queda menos de 1 hora'
     }
@@ -78,14 +82,20 @@ const HistoryChatCard = ({
       return (
         <div className="flex gap-15 justify-center align-center">
           <Image
-            onClick={() => handleOnConfirm(id)}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleOnConfirm(id)
+            }}
             className="cursor-pointer"
             priority
             src={checkSVG}
             alt="confirm"
           />
           <Image
-            onClick={() => handleOnCancel()}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleOnCancel()
+            }}
             className="cursor-pointer"
             priority
             src={closeSVG}
@@ -97,7 +107,10 @@ const HistoryChatCard = ({
 
     return (
       <Image
-        onClick={() => handleOnDelete()}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleOnDelete()
+        }}
         className="cursor-pointer"
         priority
         src={trashSVG}
@@ -107,7 +120,12 @@ const HistoryChatCard = ({
   }, [handleOnCancel, handleOnConfirm, handleOnDelete, id, isSelected])
 
   return (
-    <div className={`flex w-full h-70 py-13 px-19 gap-13 rounded-4 mb-16 ${isSelected && 'bg-opacity-50 bg-background-selected'}`}>
+    <div
+      onClick={(e) => {
+        e.stopPropagation()
+        handleRetrieveChat(id)
+      }}
+      className={`flex w-full h-70 py-13 px-19 gap-13 rounded-4 mb-16 ${isSelected && 'bg-opacity-50 bg-background-selected'}`}>
       <div className="flex justify-center align-center">
         <div className="inline-block bg-primary-light rounded-full h-35 w-35 flex justify-center">
           <Image

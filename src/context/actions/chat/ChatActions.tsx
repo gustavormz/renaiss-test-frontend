@@ -1,6 +1,6 @@
 'use client'
 
-import { INewChatProps, IDeleteChatProps, IUpdateChatProps } from './IChatActions'
+import { INewChatProps, IDeleteChatProps, IUpdateChatProps, ISetChatProps } from './IChatActions'
 
 import { ETypes as EAppTypes } from '../../reducer/appReducer'
 import { ETypes as EMessagesTypes } from '../../reducer/messagesReducer'
@@ -38,8 +38,22 @@ const newChat = ({
 const deleteChat = ({
   chatDispatch,
   chatId,
-  chats
+  chats,
+  activeChat,
+  messagesDispatch,
 }: IDeleteChatProps) => {
+  if (activeChat && activeChat.id === chatId) {
+    chatDispatch({
+      type: EChatTypes.SET_ACTIVE_CHAT,
+      payload: { activeChat: undefined }
+    })
+    messagesDispatch({
+      type: EMessagesTypes.SET_MESSAGES,
+      payload: {
+        messages: []
+      }
+    })
+  }
   const newChats = chats.filter(chat => chat.id !== chatId)
   chatDispatch({
     type: EChatTypes.SET_CHATS,
@@ -53,8 +67,14 @@ const updateChat = ({
   chats,
   messages,
 }: IUpdateChatProps) => {
+  if (!chatId) {
+    return
+  }
   const copyChats = [...chats]
   const currentChatIndex = copyChats.findIndex((chat) => chat.id === chatId)
+  if (currentChatIndex === -1) {
+    return
+  }
   const currentChat = copyChats[currentChatIndex]
   currentChat.messages = [...messages]
   copyChats[currentChatIndex] = { ...currentChat }
@@ -64,10 +84,30 @@ const updateChat = ({
   })
 }
 
+const setChat = ({
+  chatDispatch,
+  chatId,
+  chats,
+  messagesDispatch,
+}: ISetChatProps) => {
+  const activeChat = chats.find(chat => chat.id === chatId)
+  if (activeChat) {
+    chatDispatch({
+      type: EChatTypes.SET_ACTIVE_CHAT,
+      payload: { activeChat }
+    })
+    messagesDispatch({
+      type: EMessagesTypes.SET_MESSAGES,
+      payload: { messages: activeChat.messages }
+    })
+  }
+}
+
 const actions = {
   newChat,
   deleteChat,
   updateChat,
+  setChat,
 }
 
 export default actions
